@@ -4,10 +4,10 @@ from django.http import HttpResponse
 
 from PIL import Image
 
-from counter.settings import RECORD_VISITS, IMAGE_FILE
+from counter.settings import RECORD_VISITS, IMAGE_FILE, IMAGE_SIZE
 from counter.models import Record
 
-image = Image.new('RGB', (1, 1), (255,0,0,0))
+image = Image.new('RGB', (IMAGE_SIZE, IMAGE_SIZE), (255,0,0,0))
 
 def hit_view(request, site, slug):
     if RECORD_VISITS:
