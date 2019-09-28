@@ -7,7 +7,7 @@ from PIL import Image
 from counter.settings import RECORD_VISITS, IMAGE_FILE, IMAGE_SIZE
 from counter.models import Record
 
-image = Image.new('RGB', (IMAGE_SIZE, IMAGE_SIZE), (255,0,0,0))
+image = Image.new('L', (IMAGE_SIZE, IMAGE_SIZE))
 
 def hit_view(request, site, slug):
     if RECORD_VISITS:
@@ -32,7 +32,7 @@ def hit_view(request, site, slug):
         with open(IMAGE_FILE, "rb") as f:
             response = HttpResponse(f.read(), content_type="image/jpeg")
     else:
-        response = HttpResponse(content_type="image/jpeg")
-        image.save(response, "JPEG")
+        response = HttpResponse(content_type="image/gif")
+        image.save(response, "GIF")
 
     return response
