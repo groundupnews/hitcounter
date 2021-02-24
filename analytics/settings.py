@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'counter',
+    'stats',
 ]
 
 MIDDLEWARE = [
@@ -119,5 +120,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATS_EXCLUDED_URLS = ["www.groundup.org.za", "groundup.org.za",
+                       "www.groundup.news",
+                       "groundup.news", "republish.groundup.org.za", ""]
+
 
 from .local_settings import *
