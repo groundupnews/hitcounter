@@ -45,7 +45,7 @@ def add_to_count(records, internal_url, external_url):
         try:
             webpage = Webpage.objects.get(internal_url=internal_url,
                                           external_url=external_url)
-            records[(internal_url, extenal_url)] = webpage.count
+            records[(internal_url, external_url)] = webpage.count
         except Webpage.DoesNotExist:
             records[(internal_url, external_url)] = 1
 
