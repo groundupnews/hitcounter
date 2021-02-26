@@ -121,9 +121,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATS_EXCLUDED_URLS = ["www.groundup.org.za", "groundup.org.za",
-                       "www.groundup.news",
-                       "groundup.news", "republish.groundup.org.za", ""]
-
-
 from .local_settings import *
