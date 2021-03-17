@@ -2,4 +2,8 @@
 *~
 *.pyc
 local_settings.py
+access_hitcounter.log
+access_republish.log
+out_hitcounter.txt
+out_republish.txt
 

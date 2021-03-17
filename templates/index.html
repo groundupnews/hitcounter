@@ -1,0 +1,9 @@
+{% if request.user.is_staff %}
+    <p>
+        <a href="/stats/urls/">Webstats</a>
+    </p>
+{% else %}
+    <p>
+        <a href="/admin/">Login</a>
+    </p>
+{% endif %}

@@ -9,6 +9,9 @@ class Webpage(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
+    def clean_internal_url(self):
+        return self.internal_url.split(' ')[1]
+
     class Meta:
         unique_together = (('external_url', 'internal_url'), )
         ordering = ['-created', '-count', ]
