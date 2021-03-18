@@ -25,3 +25,6 @@ class FilterForm(Form):
     date_to = forms.DateField(initial=INITIAL_DATE_TO())
     minimum_hits = forms.IntegerField(initial=INITIAL_MIN_HITS,
                                       min_value=0)
+    include_urls = forms.CharField(max_length=200, required=False, initial="",
+                                   help_text="Separate URLs by spaces. "
+                                   "Leave blank to include all.")

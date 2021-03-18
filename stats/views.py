@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 
 from stats.models import Webpage, LogFilePosition
 
@@ -34,6 +35,7 @@ def url_view(request):
             days_back = form.cleaned_data['days_back']
             max_urls = form.cleaned_data['max_urls']
             minimum_hits = form.cleaned_data['minimum_hits']
+            include_urls = form.cleaned_data['include_urls']
             if days_back:
                 date_from = datetime.datetime.now() - \
                     datetime.timedelta(days=days_back)
@@ -50,16 +52,25 @@ def url_view(request):
         max_urls = forms.INITIAL_MAX_URLS
         date_from = forms.INITIAL_DATE_FROM()
         date_to = forms.INITIAL_DATE_TO()
+        include_urls = ""
 
     webpages = Webpage.objects.exclude(external_url__in=EXCLUDED_URLS). \
         filter(created__gte=date_from).filter(created__lte=date_to). \
         filter(count__gte=minimum_hits).order_by('-count')
 
+    if include_urls:
+        include_urls = include_urls.split(" ")
+        include_urls = [i.strip() for i in include_urls if i]
+        webpages = webpages.filter(external_url__in=include_urls)
+
     if max_urls:
         webpages = webpages[:max_urls]
+
+    total_hits = webpages.aggregate(Sum('count'))
 
     return render(request, "stats/webpage_list.html",
                   {
                       'webpages': webpages,
+                      'total_hits': total_hits['count__sum'],
                       'form': form
                   });
