@@ -33,6 +33,7 @@ def url_view(request):
         if form.is_valid():
             days_back = form.cleaned_data['days_back']
             max_urls = form.cleaned_data['max_urls']
+            minimum_hits = form.cleaned_data['minimum_hits']
             if days_back:
                 date_from = datetime.datetime.now() - \
                     datetime.timedelta(days=days_back)
@@ -45,13 +46,14 @@ def url_view(request):
     else:
         form = forms.FilterForm()
         days_back = forms.INITIAL_DAYS_BACK
+        minimum_hits = forms.INITIAL_MIN_HITS
         max_urls = forms.INITIAL_MAX_URLS
         date_from = forms.INITIAL_DATE_FROM()
         date_to = forms.INITIAL_DATE_TO()
 
     webpages = Webpage.objects.exclude(external_url__in=EXCLUDED_URLS). \
         filter(created__gte=date_from).filter(created__lte=date_to). \
-        order_by('-count')
+        filter(count__gte=minimum_hits).order_by('-count')
 
     if max_urls:
         webpages = webpages[:max_urls]
