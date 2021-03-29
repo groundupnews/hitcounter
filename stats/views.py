@@ -32,17 +32,11 @@ def url_view(request):
     if request.method == 'POST':
         form = forms.FilterForm(request.POST)
         if form.is_valid():
-            days_back = form.cleaned_data['days_back']
             max_urls = form.cleaned_data['max_urls']
             minimum_hits = form.cleaned_data['minimum_hits']
             include_urls = form.cleaned_data['include_urls']
-            if days_back:
-                date_from = datetime.datetime.now() - \
-                    datetime.timedelta(days=days_back)
-                date_to = datetime.datetime.now()
-            else:
-                date_from = form.cleaned_data['date_from']
-                date_to = form.cleaned_data['date_to']
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
         else:
             messages.add_message(request, messages.ERROR, "Please correct")
     else:
