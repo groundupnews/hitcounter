@@ -10,7 +10,9 @@ def get_log_file(filename):
     f = open(filename, 'r')
     lines = f.readlines()
 
-    parsed_lines = [re.match(REGEX, line[0:-1]).groups() for line in lines]
+    parsed_lines = parsed_lines = [re.match(REGEX, line[0:-1]).groups()
+                                   for line in lines if re.match(REGEX, line[0:-1])
+                                   is not None]
     return parsed_lines
 
 
