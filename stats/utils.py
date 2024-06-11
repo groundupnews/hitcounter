@@ -81,7 +81,6 @@ def process_log_file(filename):
     filtered_log_list = filter_log_list(log_list, time_accessed, records_read)
     important_fields = filter_important_fields(filtered_log_list)
     cleaned_list = extract_domain_from_external_url(important_fields)
-    print("A", len(cleaned_list), cleaned_list[0])
     with transaction.atomic():
         records = {}
         for item in cleaned_list:
