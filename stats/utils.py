@@ -86,5 +86,5 @@ def process_log_file(filename):
         for item in cleaned_list:
             add_to_count(records, item[0], item[1])
         write_records(records)
-        # save_log_file_position(filename, log_list[-1][1], len(log_list))
+        save_log_file_position(filename, log_list[-1][1], len(log_list))
     return len(filtered_log_list)
