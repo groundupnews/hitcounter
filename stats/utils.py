@@ -30,7 +30,7 @@ def filter_log_list(log_list, time, line_num):
     if len(log_list) >= line_num:
         if log_list[line_num-1][1] == time:
             log_list = log_list[line_num:]
-    result = [l for l in log_list if l[3] == '200']
+    result = [l for l in log_list if l[3] == '200' or l[3] == '301']
     return result
 
 def filter_important_fields(filtered_log_list):
@@ -81,10 +81,11 @@ def process_log_file(filename):
     filtered_log_list = filter_log_list(log_list, time_accessed, records_read)
     important_fields = filter_important_fields(filtered_log_list)
     cleaned_list = extract_domain_from_external_url(important_fields)
+    print("A", len(cleaned_list), cleaned_list[0])
     with transaction.atomic():
         records = {}
         for item in cleaned_list:
             add_to_count(records, item[0], item[1])
         write_records(records)
-        save_log_file_position(filename, log_list[-1][1], len(log_list))
+        # save_log_file_position(filename, log_list[-1][1], len(log_list))
     return len(filtered_log_list)
